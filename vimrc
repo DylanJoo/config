@@ -1,4 +1,4 @@
-" Author: Dylan Jia-Huei Ju
+" aUTHOR: dYLAN jIA-hUEI jU
 " Date: May 20, 2021
 " =========================
 
@@ -19,13 +19,13 @@ call plug#begin('~/.vim/plugged')
 Plug 'preservim/tagbar'
 Plug 'preservim/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'kien/ctrlp.vim'
 Plug 'morhetz/gruvbox'
 Plug 'garbas/vim-snipmate'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'tomtom/tlib_vim'
 Plug 'airblade/vim-gitgutter'
 Plug 'ervandew/supertab'
+Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'tomtom/tlib_vim'
 call plug#end()
 
 " auto reload vimrc when editing it
@@ -200,7 +200,7 @@ cmap cd. lcd %:p:h
 "--------------------------------------------------------------------------- 
 
 " Ctrl-[ jump out of the tag stack (undo Ctrl-])
-map <C-[> <ESC>:po<CR>
+"map <C-[> <ESC>:po<CR>
 
 " ,g generates the header guard
 map <leader>g :call IncludeGuard()<CR>
@@ -267,31 +267,48 @@ endfun
 " PLUGIN SETTINGS
 "--------------------------------------------------------------------------- 
 
-" --- Command-T
-let g:CommandTMaxHeight = 15
-
 " --- SuperTab
 let g:SuperTabDefaultCompletionType = "context"
 let g:SuperTabCompletionContexts = ['s:ContextText', 's:ContextDiscover']
 let g:SuperTabContextDiscoverDiscovery = ["&completefunc:<c-x><c-u>", "&omnifunc:<c-x><c-o>"]
-
 
 " --- EasyMotion
 "let g:EasyMotion_leader_key = '<Leader>m' " default is <Leader>w
 hi link EasyMotionTarget ErrorMsg
 hi link EasyMotionShade  Comment
 
+" -- vim-airline"
+let g:airline_powerline_fonts = 0
+let g:airline_theme = 'gruvbox'
+let g:airline#extensions#tabline#enabled = 1
+
+" -- Ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+let g:ctrlp_custom_ignore = '\v[\/]\.(git|hg|svn)$'
+let g:ctrlp_custom_ignore = {
+  \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+  \ 'file': '\v\.(exe|so|dll)$',
+  \ 'link': 'some_bad_symbolic_links',
+  \ }
+
 " -- SnipMate
 let g:snipMate = { 'snippet_version' : 1 }
 
+" -- NERDTree
+" nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <Left> :NERDTreeToggle<CR>
+
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+let NERDTreeMinimalUI = 0
+let NERDTreeChDirMode = 2
+
 " --- TagBar
-" toggle TagBar with F7
-nnoremap <silent> <F7> :TagbarToggle<CR> 
-" set focus to TagBar when opening it
+" nnoremap <S-t> :TagbarToggle<CR>
+nnoremap <silent><Right> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_ctags_bin='/usr/local/bin/ctags'"
-
-" --- vim-airline
 
 " --- SnipMate
 let g:snipMateAllowMatchingDot = 0
