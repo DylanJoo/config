@@ -1,4 +1,4 @@
-" aUTHOR: dYLAN jIA-hUEI jU
+" AuthoR: Dylan Jia-Huei Ju
 " Date: May 20, 2021
 " =========================
 
