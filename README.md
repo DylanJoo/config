@@ -18,3 +18,7 @@ git clone https://github.com/powerline/fonts.git
 cd fonts
 ./install.sh
 ```
+- add line in ~/.tmux.conf
+```
+set -g default-terminal "xterm-256color"
+```
