@@ -1,6 +1,9 @@
 " aUTHOR: dYLAN jIA-hUEI jU
 " Date: May 20, 2021
 " =========================
+" 1. vim-plug 
+" 2. ctag-exuberant
+" =========================
 
 set nocompatible	" not compatible with the old-fashion vi mode
 set bs=2		" allow backspacing over everything in insert mode
@@ -28,6 +31,7 @@ Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
 Plug 'tomtom/tcomment_vim'
 call plug#end()
+
 
 " auto reload vimrc when editing it
 autocmd! bufwritepost .vimrc source ~/.vimrc
@@ -297,21 +301,6 @@ let g:ctrlp_custom_ignore = {
 " -- SnipMate
 let g:snipMate = { 'snippet_version' : 1 }
 
-" -- NERDTree
-" nnoremap <C-n> :NERDTreeToggle<CR>
-nnoremap <Left> :NERDTreeToggle<CR>
-
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
-    \ quit | endif
-let NERDTreeMinimalUI = 0
-let NERDTreeChDirMode = 2
-
-" --- TagBar
-" nnoremap <S-t> :TagbarToggle<CR>
-nnoremap <silent><Right> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
-let g:tagbar_ctags_bin='/usr/local/bin/ctags'"
-
 " --- SnipMate
 let g:snipMateAllowMatchingDot = 0
 
@@ -320,4 +309,44 @@ let g:gitgutter_enabled = 1
 
 " set ejs filetype to html
 au BufNewFile,BufRead *.ejs set filetype=html
+
+" --- ctags
+set tags=~/git/tags,~/.tags;$HOME
+
+" --- cscope
+set cscopetag
+set csto=0
+
+if filereadable("cscope.out")
+   cs add cscope.out   
+elseif $CSCOPE_DB != ""
+   cs add $CSCOPE_DB
+endif
+
+set cscopeverbose
+
+nmap zs :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap zg :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap zc :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap zt :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap ze :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap zf :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap zi :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap zd :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+" -- NERDTree
+" nnoremap <C-n> :NERDTreeToggle<CR>
+nnoremap <silent><Left> :NERDTreeToggle<CR>
+
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+let NERDTreeMinimalUI = 0
+let NERDTreeChDirMode = 2
+
+" --- TagBar
+" nnoremap <S-t> :TagbarToggle<CR>
+" nnoremap <silent><Right> :TagbarToggle<CR>
+nnoremap <F8> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+let g:tagbar_ctags_bin='/usr/local/bin/ctags'"
 
