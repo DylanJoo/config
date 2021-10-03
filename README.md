@@ -1,7 +1,7 @@
 ## vim 
 - font: Fira Mono Medium for Powerline - medium bold
 
-## vim-plugin
+## vim plugin and ctags/cscope
 - vim-plug installation:
 ```
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
@@ -21,4 +21,15 @@ cd fonts
 - add line in ~/.tmux.conf
 ```
 set -g default-terminal "xterm-256color"
+```
+## Installation
+- Code tracing tools
+```
+ctags
+cscope
+```
+## Build-up 
+```
+ctags -R
+cscope -Rbq
 ```
