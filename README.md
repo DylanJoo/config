@@ -7,7 +7,16 @@
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 ```
-- ctag installtion:
+- Some "ERROR" might occured, if the version mismatched
+```
+:version
+```
+See if the version of VIM is 'small version'
+```
+sudo apt-get install vim-gui-common
+sudo apt-get install vim-runtime
+```
+- ctag installtion
 ```
 brew install ctags-exuberant
 ```
