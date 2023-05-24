@@ -10,6 +10,7 @@ set bs=2		" allow backspacing over everything in insert mode
 set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set autoread		" auto read when file is changed from outside
+set shortmess-=S
 
 filetype off          " necessary to make ftdetect work on Linux
 syntax on
@@ -311,7 +312,7 @@ let g:gitgutter_enabled = 1
 au BufNewFile,BufRead *.ejs set filetype=html
 
 " --- ctags
-set tags=~/git/tags,~/.tags;$HOME
+set tags=~/tags,~/.tags;$HOME
 
 " --- cscope
 set cscopetag
@@ -344,8 +345,10 @@ let NERDTreeMinimalUI = 0
 let NERDTreeChDirMode = 2
 
 " --- TagBar
+" --- TagBar
 " nnoremap <S-t> :TagbarToggle<CR>
-" nnoremap <silent><Right> :TagbarToggle<CR>
+nnoremap <silent><Right> :TagbarToggle<CR>
+
 nnoremap <F8> :TagbarToggle<CR>
 let g:tagbar_autofocus = 1
 let g:tagbar_ctags_bin='/usr/local/bin/ctags'"
