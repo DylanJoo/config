@@ -1,3 +1,4 @@
+'''
 function gpucount(){
     declare -a names
     list=()
@@ -45,3 +46,44 @@ function gpucount(){
     printf '%20s----%6s\n' "--------" "------"
     printf '%20s  : %6s cores\n' "total" "$total"
 }
+'''
+
+'''
+function cpucount(){
+    declare -a names
+    list=()
+    for x in $(squeue -p cpu -o "%u %t %C"); do
+        list+=( "$x" )
+        #echo $x
+    done
+    names=()
+    cpus=()
+    total=0
+    for (( i=3; i<${#list[*]}; i+=3)); do
+        existing=-1
+        #echo "${list[i+1]}"
+        if [ "${list[i+1]}" = "R" ]; then
+            for (( j=0; j<${#names[*]}; j+=1)); do
+                if [ "${list[i]}" = "${names[j]}" ]; then
+                    existing=$j
+                    break
+                fi
+            done
+
+            total=$(( $total + ${list[$((i+2))]} ))
+            if [ $existing -eq -1 ]; then
+                names+=( "${list[i]}" )
+                cpus+=( "${list[$((i+2))]}" )
+            else
+                cpus[$existing]=$((${cpus[$existing]}+${list[$((i+2))]}))
+            fi
+        fi
+    done
+
+    for (( i=0; i<${#names[*]}; i+=1 )); do
+        printf '%20s  : %6s\n' "${names[i]}" "${cpus[i]}"
+    done
+    printf '%20s----%6s\n' "--------" "------"
+    printf '%20s  : %6s\n' "total" "$total"
+}
+'''
