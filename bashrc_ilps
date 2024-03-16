@@ -1,4 +1,54 @@
-'''
+. /home/dju/miniconda3/etc/profile.d/conda.sh
+export LANGUAGE=UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_COLLATE=$LANG
+export LC_CTYPE=$LANG
+export LC_MESSAGES=$LANG
+export LC_MONETARY=$LANG
+export LC_NUMERIC=$LANG
+export LC_TIME=$LANG
+export LC_ALL=$LANG
+
+# Add this for runing GPU on UvA's slurm
+export CUDA_HOME="/usr/local/cuda-11.0"
+export PATH="${CUDA_HOME}/bin:${PATH}"
+export LIBRARY_PATH="${CUDA_HOME}/lib64:${LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}"
+
+# You want $TERM to be screen-256color when tmux is running, and you want it to be xterm-256color when tmux is not running.
+export TERM=screen-256color
+export GIT_PAT=''
+
+# Customized plugin 
+function pretty_csv {
+    column -t -s, -n "$@" | less -F -S -X -K
+}
+function value_counts {
+    cut -f "$2" "$1" | sort | uniq -c | sort -nr
+}
+function rm_empty {
+    find . -type f -empty -print -delete
+}
+function big_file_ignore {
+    find . -size +50M | cat >> .gitignore
+}
+function ipynb2py {
+    jupyter nbconvert "$@" --to python
+} 
+function git_pretty_log {
+    git log --format='%h (%ad) %s' --date=short
+} 
+function get_my_pids {
+    ps aux | grep -E 'dju' | awk '{print $2, $9, $11, $12, $13}'
+}
+function watch_me { 
+    watch "squeue -u $(whoami)"
+}
+
+# Add this for slurm
 function gpucount(){
     declare -a names
     list=()
@@ -46,9 +96,6 @@ function gpucount(){
     printf '%20s----%6s\n' "--------" "------"
     printf '%20s  : %6s cores\n' "total" "$total"
 }
-'''
-
-'''
 function cpucount(){
     declare -a names
     list=()
@@ -86,4 +133,3 @@ function cpucount(){
     printf '%20s----%6s\n' "--------" "------"
     printf '%20s  : %6s\n' "total" "$total"
 }
-'''
