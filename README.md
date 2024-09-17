@@ -1,6 +1,15 @@
 ## vim 
 - font: Fira Mono Medium for Powerline - medium bold
 
+## (optional) Install miniconda
+- Install latest miniconda from the website
+```
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh
+bash Miniconda3-latest-Linux-x86_64.sh
+```
+
+- Activate conda execution: if you opt off intializing automatic conda env. You should modify sth similar to the first line of ``bashrc`` file.
+
 ## vim plugin and ctags/cscope
 - vim-plug installation:
 ```
