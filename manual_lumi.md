@@ -1,7 +1,7 @@
 # Symbolic link due to disk quota (mkdir first)
 ```
 ln -s /project/project_465001339/datasets ~/datasets
-ln -s /project/project_465001339/huggingface ~/.cache/singularity
+ln -s /project/project_465001339/huggingface ~/.cache/huggingface
 ln -s /project/project_465001339/singularity ~/.singularity
 ```
 
