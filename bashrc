@@ -1,132 +1,42 @@
-# ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
+# . /ivi/ilps/personal/dju/miniconda3/etc/profile.d/conda.sh
+export LANGUAGE=UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=UTF-8
+export LC_CTYPE=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LC_COLLATE=$LANG
+export LC_CTYPE=$LANG
+export LC_MESSAGES=$LANG
+export LC_MONETARY=$LANG
+export LC_NUMERIC=$LANG
+export LC_TIME=$LANG
+export LC_ALL=$LANG
 
-# If not running interactively, don't do anything
-case $- in
-    *i*) ;;
-      *) return;;
-esac
+# Add this for runing GPU on UvA's slurm
+# export CUDA_HOME="/usr/local/cuda-12.3"
+# export CUDA_HOME="/usr/local/cuda-11"
+# export PATH="${CUDA_HOME}/bin:${PATH}"
+export LIBRARY_PATH="${CUDA_HOME}/lib64:${LIBRARY_PATH}"
+export PATH="$PATH:/home/dju/temp/nvim-linux-x86_64/bin"
+export LD_LIBRARY_PATH="${CUDA_HOME}/lib64:${LD_LIBRARY_PATH}"
+unset LD_LIBRARY_PATH
+# export CUDA_HOST_COMPILER=/usr/bin/gcc
 
-# don't put duplicate lines or lines starting with space in the history.
-# See bash(1) for more options
-HISTCONTROL=ignoreboth
-
-# append to the history file, don't overwrite it
-shopt -s histappend
-
-# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
-
-# check the window size after each command and, if necessary,
-# update the values of LINES and COLUMNS.
-shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-#shopt -s globstar
-
-# make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
-# set variable identifying the chroot you work in (used in the prompt below)
-if [ -z "${debian_chroot:-}" ] && [ -r /etc/debian_chroot ]; then
-    debian_chroot=$(cat /etc/debian_chroot)
-fi
-
-# set a fancy prompt (non-color, unless we know we "want" color)
-case "$TERM" in
-    xterm-color|*-256color) color_prompt=yes;;
-esac
-
-# uncomment for a colored prompt, if the terminal has the capability; turned
-# off by default to not distract the user: the focus in a terminal window
-# should be on the output of commands, not on the prompt
-#force_color_prompt=yes
-
-if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
-fi
-
-if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-else
-    PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
-fi
-unset color_prompt force_color_prompt
-
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\u@\h: \w\a\]$PS1"
-    ;;
-*)
-    ;;
-esac
-
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# colored GCC warnings and errors
-#export GCC_COLORS='error=01;31:warning=01;35:note=01;36:caret=01;32:locus=01:quote=01'
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
-fi
-
-# enable programmable completion features (you don't need to enable
-# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-# sources /etc/bash.bashrc).
-if ! shopt -oq posix; then
-  if [ -f /usr/share/bash-completion/bash_completion ]; then
-    . /usr/share/bash-completion/bash_completion
-  elif [ -f /etc/bash_completion ]; then
-    . /etc/bash_completion
-  fi
-fi
+# My personal storage link
+export DATA_DIR=/ivi/ilps/personal/dju/datasets/
+export INDEX_DIR=/ivi/ilps/personal/dju/indexes/
+export MODEL_DIR=/ivi/ilps/personal/dju/checkpoints/
 
 # You want $TERM to be screen-256color when tmux is running, and you want it to be xterm-256color when tmux is not running.
-if [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; then
-  export TERM=screen-256color
-else
-    export TERM=xterm-256color
-fi
+export TERM=screen-256color
 
-export JAVA_HOME=/usr/lib/jvm/java-14-openjdk-amd64
-export GIT_PAT='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'
-# export PATH="/home/jhju/miniconda3/bin:$PATH"
 # Customized plugin 
+function show_jobs {
+    squeue --format="%.18i %.9P %.30j %.8u %.8T %.10M %.9l %.6D %R" --me
+}
+function enter_conda {
+    source /ivi/ilps/personal/dju/miniconda3/etc/profile.d/conda.sh 
+}
 function pretty_csv {
     column -t -s, -n "$@" | less -F -S -X -K
 }
@@ -145,15 +55,108 @@ function ipynb2py {
 function git_pretty_log {
     git log --format='%h (%ad) %s' --date=short
 } 
-function cfda3_java_home {
-    export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
-}
-function cfda1_java_home {
-    export JAVA_HOME=/usr/lib/jvm/java-14-openjdk-amd64/
-}
-function cfda5_java_home {
-    export JAVA_HOME=/usr/lib/jvm/java-19-openjdk-amd64/
-}
 function get_my_pids {
-    ps aux | grep -E "$@" | awk '{print $2}'
+    ps aux | grep -E 'dju' | awk '{print $2, $9, $11, $12, $13}'
 }
+function watch_me { 
+    watch "squeue -u $(whoami)"
+}
+function see_gpu {
+    echo squeue -u $USER | tail -1| awk '{print $1}'
+    srun -jobid=$jobid nvidia-smi
+}
+
+
+# Add this for slurm
+function see_gpu_name(){
+    sinfo -o "%30N %20m %50G"
+}
+
+function gpucount(){
+    declare -a names
+    list=()
+    for x in $(squeue -p gpu -o "%u %t %b %m"); do
+        list+=( "$x" )
+        #echo $x
+    done
+    names=()
+    gpus=()
+    rams=()
+    total=0
+    for (( i=4; i<${#list[*]}; i+=4)); do
+        existing=-1
+        #echo "${list[i+1]}"
+        if [ "${list[i+1]}" = "R" ]; then
+            for (( j=0; j<${#names[*]}; j+=1)); do
+                if [ "${list[i]}" = "${names[j]}" ]; then
+                    existing=$j
+                    break
+                fi
+            done
+            tmp=$(echo "${list[i+2]}" | tr ":" "\n")
+            for x in $tmp; do
+                gcnt=$x
+            done
+            tmp=$(echo "${list[i+3]}" | tr "G" "\n")
+            for x in $tmp; do
+                ramcnt=$x
+            done
+            total=$(( $total + 1 ))
+            if [ $existing -eq -1 ]; then
+                names+=( "${list[i]}" )
+                gpus+=( "$gcnt" )
+                rams+=( "$ramcnt" )
+            else
+                gpus[$existing]=$((${gpus[$existing]}+$gcnt))
+                rams[$existing]=$((${rams[$existing]}+$ramcnt))
+            fi
+        fi
+    done
+
+    for (( i=0; i<${#names[*]}; i+=1 )); do
+        printf '%20s  : %6s cores    %6sG\n' "${names[i]}" "${gpus[i]}" "${rams[i]}"
+    done
+    printf '%20s----%6s\n' "--------" "------"
+    printf '%20s  : %6s cores\n' "total" "$total"
+}
+function cpucount(){
+    declare -a names
+    list=()
+    for x in $(squeue -p cpu -o "%u %t %C"); do
+        list+=( "$x" )
+        #echo $x
+    done
+    names=()
+    cpus=()
+    total=0
+    for (( i=3; i<${#list[*]}; i+=3)); do
+        existing=-1
+        #echo "${list[i+1]}"
+        if [ "${list[i+1]}" = "R" ]; then
+            for (( j=0; j<${#names[*]}; j+=1)); do
+                if [ "${list[i]}" = "${names[j]}" ]; then
+                    existing=$j
+                    break
+                fi
+            done
+
+            total=$(( $total + ${list[$((i+2))]} ))
+            if [ $existing -eq -1 ]; then
+                names+=( "${list[i]}" )
+                cpus+=( "${list[$((i+2))]}" )
+            else
+                cpus[$existing]=$((${cpus[$existing]}+${list[$((i+2))]}))
+            fi
+        fi
+    done
+
+    for (( i=0; i<${#names[*]}; i+=1 )); do
+        printf '%20s  : %6s\n' "${names[i]}" "${cpus[i]}"
+    done
+    printf '%20s----%6s\n' "--------" "------"
+    printf '%20s  : %6s\n' "total" "$total"
+}
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
