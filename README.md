@@ -29,6 +29,21 @@ sudo apt-get install vim-runtime
 ```
 brew install ctags-exuberant
 ```
+- ctag installation on cluster
+```
+mkdir -p /scratch/ctags-install
+cd /scratch
+git clone https://github.com/universal-ctags/ctags.git
+cd ctags
+./autogen.sh
+./configure --prefix=/scratch/$USER/ctags-install
+make -j4
+make install
+
+export PATH="/scratch/ctags-install/bin:$PATH"
+
+let g:tagbar_ctags_bin = '/scratch/ctags-install/bin/ctags'
+```
 - font-powerline installation:
 ```
 cd ~/Library/Fonts/
